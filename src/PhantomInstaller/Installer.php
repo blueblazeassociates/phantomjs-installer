@@ -77,14 +77,20 @@ class Installer
         $packages = $composer->getRepositoryManager()->getLocalRepository()->getCanonicalPackages();
 
         foreach($packages as $package) {
-            if($package->getName() === 'jakoch/phantomjs-installer') {
+// BEGIN egifford 2015_02_23
+//            if($package->getName() === 'jakoch/phantomjs-installer') {
+            if($package->getName() === 'blueblazeassociates/phantomjs-installer') {
+// END egifford 2015_02_23
                 $version = $package->getPrettyVersion();
             }
         }
 
         // version was not found in the local repository, let's take a look at the root package
         if($version == null) {
-            $version = self::getRequiredVersion($composer->getPackage());
+// BEGIN egifford 2015_02_23
+//            $version = self::getRequiredVersion($composer->getPackage());
+            $version = self::getRequiredVersion($composer->getPackage(), 'blueblazeassociates/phantomjs-installer');
+// END egifford 2015_02_23
         }
 
         // fallback to a hardcoded version number, if "dev-master" was set
