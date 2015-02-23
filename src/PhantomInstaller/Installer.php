@@ -102,6 +102,13 @@ class Installer
             return $matches[1];
         }
 
+// BEGIN egifford 2015_02_23
+        // grab version from a Composer patch version tag with a patch level, like "1.9.8-p02"
+        if(preg_match('/(\d.\d.\d)(?:(?:-p\d{2})?)/i', $version, $matches)) {
+          return $matches[1];
+        }
+// END egifford 2015_02_23
+
         return $version;
     }
 
