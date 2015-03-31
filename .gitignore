@@ -1,0 +1,8 @@
+# Composer executables
+/composer.phar
+/composer
+
+# Eclipse files
+/.settings
+/.buildpath
+/.project
