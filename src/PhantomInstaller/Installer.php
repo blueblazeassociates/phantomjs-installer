@@ -77,25 +77,43 @@ class Installer
         $packages = $composer->getRepositoryManager()->getLocalRepository()->getCanonicalPackages();
 
         foreach($packages as $package) {
-            if($package->getName() === 'jakoch/phantomjs-installer') {
+// BEGIN egifford 2015_02_23
+//            if($package->getName() === 'jakoch/phantomjs-installer') {
+            if($package->getName() === 'blueblazeassociates/phantomjs-installer') {
+// END egifford 2015_02_23
                 $version = $package->getPrettyVersion();
             }
         }
 
         // version was not found in the local repository, let's take a look at the root package
         if($version == null) {
-            $version = self::getRequiredVersion($composer->getPackage());
-        }
-
-        // grab version from commit-reference, e.g. "dev-master#<commit-ref> as version"
-        if(preg_match('/dev-master#(?:.*)(\d.\d.\d)/i', $version, $matches)) {
-            $version = $matches[1];
+// BEGIN egifford 2015_02_23
+//            $version = self::getRequiredVersion($composer->getPackage());
+            $version = self::getRequiredVersion($composer->getPackage(), 'blueblazeassociates/phantomjs-installer');
+// END egifford 2015_02_23
         }
 
         // fallback to a hardcoded version number, if "dev-master" was set
         if ($version === 'dev-master') {
             $version = '1.9.8';
         }
+
+        // grab version from commit-reference, e.g. "dev-master#<commit-ref> as version"
+        if(preg_match('/dev-master#(?:.*)(\d.\d.\d)/i', $version, $matches)) {
+            return $matches[1];
+        }
+
+        // grab version from a git version tag with a patch level, like "1.9.8-2"
+        if(preg_match('/(\d.\d.\d)(?:(?:-\d)?)/i', $version, $matches)) {
+            return $matches[1];
+        }
+
+// BEGIN egifford 2015_02_23
+        // grab version from a Composer patch version tag with a patch level, like "1.9.8-p02"
+        if(preg_match('/(\d.\d.\d)(?:(?:-p\d{2})?)/i', $version, $matches)) {
+          return $matches[1];
+        }
+// END egifford 2015_02_23
 
         return $version;
     }
