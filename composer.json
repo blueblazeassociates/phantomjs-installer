@@ -1,10 +1,9 @@
 {
-    "name": "jakoch/phantomjs-installer",
+    "name": "blueblazeassociates/phantomjs-installer",
     "description": "A Composer package which installs the PhantomJS binary (Linux, Windows, Mac) into `/bin` of your project.",
     "type": "custom-installer",
     "keywords": ["phantomjs", "headless", "binaries"],
     "license": "MIT",
-    "version": "1.9.8",
     "authors": [
         {
             "name": "Jens-André Koch",
@@ -13,6 +12,9 @@
     ],
     "require": {
         "ext-openssl": "*"
+    },
+    "replace" : {
+        "jakoch/phantomjs-installer" : "*"
     },
     "autoload": {
         "psr-0": {
